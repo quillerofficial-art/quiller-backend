@@ -14,14 +14,12 @@ app.get("/books", (req, res) => {
     {
       id: "1",
       title: "Dummy Book One",
-      author: "Test Author",
-      cover: "https://dummyimage.com/200x300/000/fff",
+      author: "Quiller",
     },
     {
       id: "2",
       title: "Dummy Book Two",
-      author: "Another Author",
-      cover: "https://dummyimage.com/200x300/333/fff",
+      author: "Quiller",
     },
   ]);
 });
@@ -30,6 +28,13 @@ app.get("/books", (req, res) => {
 app.get("/books/:id/read", (req, res) => {
   res.json({
     signedUrl: "https://example.com/dummy.pdf",
+  });
+});
+
+// DUMMY UPLOAD API
+app.post("/upload", (req, res) => {
+  res.json({
+    key: "books/dummy.pdf",
   });
 });
 
