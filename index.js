@@ -1,56 +1,38 @@
 import express from "express";
-const app = express();
 
+const app = express();
 app.use(express.json());
 
-// --------------------
-// Health Check
-// --------------------
+// HEALTH CHECK
 app.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
-// --------------------
-// GET /books (dummy)
-// --------------------
+// DUMMY BOOK LIST
 app.get("/books", (req, res) => {
   res.json([
     {
       id: "1",
       title: "Dummy Book One",
       author: "Test Author",
-      coverUrl: "https://example.com/cover1.jpg",
-      type: "ebook"
+      cover: "https://dummyimage.com/200x300/000/fff",
     },
     {
       id: "2",
-      title: "Dummy Video Post",
-      author: "Video Creator",
-      coverUrl: "https://example.com/video1.jpg",
-      type: "video"
-    }
+      title: "Dummy Book Two",
+      author: "Another Author",
+      cover: "https://dummyimage.com/200x300/333/fff",
+    },
   ]);
 });
 
-// --------------------
-// POST /upload (dummy)
-// --------------------
-app.post("/upload", (req, res) => {
-  res.json({
-    key: "books/dummy.pdf"
-  });
-});
-
-// --------------------
-// GET /books/:id/read (dummy)
-// --------------------
+// DUMMY READ API
 app.get("/books/:id/read", (req, res) => {
   res.json({
-    signedUrl: "https://example.com/dummy.pdf"
+    signedUrl: "https://example.com/dummy.pdf",
   });
 });
 
-// --------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
