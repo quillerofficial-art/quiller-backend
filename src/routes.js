@@ -1,44 +1,37 @@
 import express from "express";
-
 const router = express.Router();
 
-// HEALTH
+// health check
 router.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
-// DUMMY BOOKS
+// get books
 router.get("/books", (req, res) => {
-  res.json({
-    success: true,
-    data: [
-      {
-        id: "1",
-        title: "Dummy Book One",
-        author: "Quiller"
-      },
-      {
-        id: "2",
-        title: "Dummy Book Two",
-        author: "Quiller"
-      }
-    ]
-  });
+  res.json([
+    {
+      id: "1",
+      title: "Dummy Book",
+      author: "Quiller",
+    },
+  ]);
 });
 
-// DUMMY READ
+// read book
 router.get("/books/:id/read", (req, res) => {
-  res.json({
-    success: true,
-    signedUrl: "https://example.com/dummy.pdf"
-  });
-});
+  const { id } = req.params;
 
-// DUMMY UPLOAD
-router.post("/upload", (req, res) => {
+  if (id !== "1") {
+    return res.status(404).json({
+      error: {
+        code: "BOOK_NOT_FOUND",
+        message: "Book does not exist",
+      },
+    });
+  }
+
   res.json({
-    success: true,
-    key: "books/dummy.pdf"
+    signedUrl: "https://example.com/file.pdf",
   });
 });
 
