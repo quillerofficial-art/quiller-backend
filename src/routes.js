@@ -1,12 +1,10 @@
 import express from "express";
 const router = express.Router();
 
-// health check
 router.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
-// get books
 router.get("/books", (req, res) => {
   res.json([
     {
@@ -17,7 +15,6 @@ router.get("/books", (req, res) => {
   ]);
 });
 
-// read book
 router.get("/books/:id/read", (req, res) => {
   const { id } = req.params;
 
@@ -31,7 +28,7 @@ router.get("/books/:id/read", (req, res) => {
   }
 
   res.json({
-    signedUrl: "https://example.com/file.pdf",
+    signedUrl: "https://example.com/dummy.pdf",
   });
 });
 
