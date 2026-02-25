@@ -1,49 +1,47 @@
 import express from "express";
 const router = express.Router();
+const books = [];
+
+
 
 router.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
 router.get("/books", (req, res) => {
-  res.json([
-    { id: "1", title: "Dummy Book", author: "Quiller" }
-  ]);
+ res.json(books);
 });
 
-router.get("/books/:id/read", (req, res) => {
-  const { id } = req.params;
+const book = books.find(b => b.id === id);
 
-  if (id !== "1") {
-    return res.status(404).json({
-      error: {
-        code: "BOOK_NOT_FOUND",
-        message: "Book does not exist"
-      }
-    });
-  }
-
-  res.json({
-    signedUrl: "https://example.com/dummy.pdf"
+if (!book) {
+  return res.status(404).json({
+    error: {
+      code: "BOOK_NOT_FOUND",
+      message: "Book does not exist"
+    }
   });
+}
+
+res.json({
+  signedUrl: `https://example.com/${book.key}`
 });
 
 
-router.post("/upload", (req, res) => {
-  const { title, author } = req.body;
+const id = Date.now().toString();
 
-  if (!title || !author) {
-    return res.status(400).json({
-      error: {
-        code: "INVALID_INPUT",
-        message: "Title and author are required"
-      }
-    });
-  }
+const newBook = {
+  id,
+  title,
+  author,
+  key: `books/${id}.pdf`
+};
 
-  return res.json({
-    key: "books/123.pdf"
-  });
+books.push(newBook);
+
+return res.json({
+  id,
+  key: newBook.key
 });
 
 export default router;
