@@ -7,11 +7,7 @@ router.get("/health", (req, res) => {
 
 router.get("/books", (req, res) => {
   res.json([
-    {
-      id: "1",
-      title: "Dummy Book",
-      author: "Quiller",
-    },
+    { id: "1", title: "Dummy Book", author: "Quiller" }
   ]);
 });
 
@@ -22,13 +18,31 @@ router.get("/books/:id/read", (req, res) => {
     return res.status(404).json({
       error: {
         code: "BOOK_NOT_FOUND",
-        message: "Book does not exist",
-      },
+        message: "Book does not exist"
+      }
     });
   }
 
   res.json({
-    signedUrl: "https://example.com/dummy.pdf",
+    signedUrl: "https://example.com/dummy.pdf"
+  });
+});
+
+
+router.post("/upload", (req, res) => {
+  const { title, author } = req.body;
+
+  if (!title || !author) {
+    return res.status(400).json({
+      error: {
+        code: "INVALID_INPUT",
+        message: "Title and author are required"
+      }
+    });
+  }
+
+  return res.json({
+    key: "books/123.pdf"
   });
 });
 
