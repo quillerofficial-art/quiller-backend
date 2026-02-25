@@ -9,10 +9,11 @@ router.get("/health", (req, res) => {
 });
 
 router.get("/books", (req, res) => {
- res.json(books);
+  res.json(books);
 });
 
-const book = books.find(b => b.id === id);
+router.get("/books/:id/read", (req, res) => {
+  const book = books.find(b => b.id === id);
 
 if (!book) {
   return res.status(404).json({
@@ -26,9 +27,11 @@ if (!book) {
 res.json({
   signedUrl: `https://example.com/${book.key}`
 });
+});
 
 
-const id = Date.now().toString();
+router.post("/upload", (req, res) => {
+  const id = Date.now().toString();
 
 const newBook = {
   id,
@@ -42,6 +45,7 @@ books.push(newBook);
 return res.json({
   id,
   key: newBook.key
+});
 });
 
 export default router;
